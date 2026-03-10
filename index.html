@@ -117,9 +117,9 @@ input, textarea, select { font-family: 'Onest', sans-serif; color: inherit; }
 .vtoolbar {
   position: sticky; top: 92px; z-index: 180;
   background: var(--sur); border-bottom: 1.5px solid var(--bdr);
-  padding: 10px 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 10px 14px; display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; overflow: hidden;
 }
-.vswrap { flex: 1; min-width: 180px; position: relative; }
+.vswrap { flex: 1; min-width: 100px; position: relative; }
 .vswrap svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: var(--ink3); pointer-events: none; }
 .vsi {
   width: 100%; height: 34px; padding: 0 10px 0 30px;
@@ -142,7 +142,7 @@ input, textarea, select { font-family: 'Onest', sans-serif; color: inherit; }
 
 /* Status filter row */
 .sfilter-row {
-  position: sticky; top: 134px; z-index: 175;
+  position: sticky; top: 146px; z-index: 175;
   background: var(--sur); border-bottom: 1.5px solid var(--bdr);
   padding: 7px 14px; display: flex; align-items: center; gap: 8px;
 }
@@ -169,9 +169,10 @@ input, textarea, select { font-family: 'Onest', sans-serif; color: inherit; }
 /* Vocab list - virtual scroll friendly */
 .vlist { padding: 8px 14px 120px; }
 .vrow {
-  display: flex; align-items: center; gap: 8px; padding: 9px 12px;
+  display: flex; align-items: center; gap: 6px; padding: 8px 10px 8px 8px;
   background: var(--sur); border: 1.5px solid var(--bdr); border-radius: 9px;
   margin-bottom: 3px; cursor: pointer; transition: all .13s; user-select: none;
+  overflow: visible;
 }
 .vrow:hover, .vrow:active { border-color: var(--blm); background: var(--bls); }
 .vrow.sel { border-color: var(--amm); background: var(--ams); }
@@ -184,11 +185,11 @@ input, textarea, select { font-family: 'Onest', sans-serif; color: inherit; }
 }
 .vchk.on { background: var(--am); border-color: var(--am); color: #fff; }
 
-.vw { font-weight: 700; font-size: 13px; flex-shrink: 0; min-width: 90px; }
-.vt { font-size: 12px; color: var(--ink2); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vw { font-weight: 700; font-size: 13px; flex-shrink: 0; }
+.vt { font-size: 12px; color: var(--ink2); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .vpos {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  padding: 2px 7px; border-radius: 100px; flex-shrink: 0;
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  padding: 2px 5px; border-radius: 100px; flex-shrink: 0; white-space: nowrap;
 }
 /* status dot */
 .vdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; background: var(--bdr2); }
@@ -200,43 +201,34 @@ input, textarea, select { font-family: 'Onest', sans-serif; color: inherit; }
 .selbar {
   display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
   background: var(--sur); border-top: 1.5px solid var(--bdr);
-  padding: 12px 16px; box-shadow: 0 -4px 20px rgba(0,0,0,.1);
-  flex-direction: row; align-items: center; gap: 10px;
-  max-width: 100%;
+  padding: 10px 12px; box-shadow: 0 -4px 20px rgba(0,0,0,.1);
+  flex-direction: row; align-items: center; gap: 7px;
+  safe-area-inset-bottom: env(safe-area-inset-bottom);
 }
 .selbar.on { display: flex; }
-.sel-info { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
-.sel-count {
-  font-family: 'Unbounded', sans-serif; font-weight: 900; font-size: 20px;
-  color: var(--am); flex-shrink: 0; line-height: 1;
-}
-.sel-label { font-size: 12px; font-weight: 600; color: var(--ink3); line-height: 1.2; }
-.sel-btns { display: flex; gap: 6px; flex-shrink: 0; }
-.sbtn-clear {
-  padding: 10px 14px; border-radius: 9px; border: 1.5px solid var(--bdr);
-  font-size: 12px; font-weight: 700; color: var(--ink3);
-}
-.sbtn-drill {
-  display: flex; align-items: center; gap: 5px;
-  padding: 10px 16px; border-radius: 9px; background: var(--blue); color: #fff;
-  font-size: 12px; font-weight: 700; transition: opacity .13s;
-}
-.sbtn-drill:hover { opacity: .88; }
-/* Bulk status buttons in selbar */
+.sel-info { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; min-width: 28px; }
+.sel-count { font-family: 'Unbounded', sans-serif; font-weight: 900; font-size: 16px; color: var(--am); line-height: 1; }
+.sel-label { font-size: 8px; font-weight: 700; color: var(--ink3); text-transform: uppercase; }
+.sel-divider { width: 1px; height: 22px; background: var(--bdr); flex-shrink: 0; }
 .sbtn-stat {
   width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid;
   display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; transition: transform .13s; flex-shrink: 0;
+  font-size: 13px; font-weight: 700; flex-shrink: 0; transition: transform .13s;
 }
-.sbtn-stat:hover { transform: scale(1.15); }
+.sbtn-stat:hover { transform: scale(1.1); }
+.sbtn-cl { background: var(--s3); border-color: var(--bdr2); color: var(--ink3); }
 .sbtn-sk { background: var(--rds); border-color: var(--rdm); color: var(--rd); }
 .sbtn-am { background: var(--ams); border-color: var(--amm); color: var(--am); }
 .sbtn-kn { background: var(--grs); border-color: var(--grm); color: var(--gr); }
+.sbtn-clear { padding: 8px 10px; border-radius: 8px; border: 1.5px solid var(--bdr); font-size: 11px; font-weight: 700; color: var(--ink3); flex-shrink: 0; }
+.sbtn-drill { display: flex; align-items: center; gap: 4px; padding: 8px 14px; border-radius: 8px; background: var(--blue); color: #fff; font-size: 12px; font-weight: 700; transition: opacity .13s; flex-shrink: 0; }
+.sbtn-drill:hover { opacity: .88; }
+
 /* Mode selector inside selbar */
 .sbtn-mode {
-  padding: 10px 12px; border-radius: 9px; border: 1.5px solid var(--blm);
-  font-size: 12px; font-weight: 700; color: var(--blue); background: var(--bls);
-  display: flex; align-items: center; gap: 4px;
+  padding: 8px 10px; border-radius: 8px; border: 1.5px solid var(--blm);
+  font-size: 11px; font-weight: 700; color: var(--blue); background: var(--bls);
+  display: flex; align-items: center; gap: 4px; flex-shrink: 0;
 }
 
 /* ══════════════════════════════════════════
@@ -298,6 +290,20 @@ input, textarea, select { font-family: 'Onest', sans-serif; color: inherit; }
   transition: opacity .13s;
 }
 .mbtn-drill:hover { opacity: .88; }
+.mbtn-delete {
+  width: 100%; padding: 10px; border-radius: 9px;
+  background: var(--rds); color: var(--rd); font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  border: 1.5px solid var(--rdm); transition: opacity .13s;
+}
+.mbtn-delete:hover { opacity: .85; }
+.mstat-clear {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700; color: var(--ink3);
+  padding: 3px 8px; border-radius: 6px; background: var(--s3); border: 1px solid var(--bdr);
+  transition: all .13s;
+}
+.mstat-clear:hover { color: var(--rd); border-color: var(--rdm); background: var(--rds); }
 
 /* ══════════════════════════════════════════
    DRILL SCREEN  (replaces vocabulary, shown over it)
@@ -608,7 +614,7 @@ input, textarea, select { font-family: 'Onest', sans-serif; color: inherit; }
   .tabs { top: 48px; }
   .tab { padding: 0 12px; font-size: 11px; gap: 4px; }
   .vtoolbar { top: 88px; }
-  .sfilter-row { top: 130px; }
+  .sfilter-row { top: 142px; }
   .gram-srch-bar { top: 88px; }
   .card-scene { height: 230px; }
   .cface { padding: 14px 12px; }
@@ -697,22 +703,22 @@ input, textarea, select { font-family: 'Onest', sans-serif; color: inherit; }
   <div class="selbar" id="selbar">
     <div class="sel-info">
       <div class="sel-count" id="selCount">0</div>
-      <div class="sel-label">words<br>selected</div>
+      <div class="sel-label">selected</div>
     </div>
-    <div class="sel-btns">
-      <button class="sbtn-stat sbtn-sk" onclick="setSelectedStatus('skip')" title="Mark all Hard">✗</button>
-      <button class="sbtn-stat sbtn-am" onclick="setSelectedStatus('maybe')" title="Mark all Almost">~</button>
-      <button class="sbtn-stat sbtn-kn" onclick="setSelectedStatus('know')" title="Mark all Known">✓</button>
-      <button class="sbtn-mode" id="modeToggle" onclick="cycleDrillMode()">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-        <span id="modeLabel">Quiz</span>
-      </button>
-      <button class="sbtn-clear" onclick="clearPicked()">Clear</button>
-      <button class="sbtn-drill" onclick="startDrill()">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        Drill
-      </button>
-    </div>
+    <div class="sel-divider"></div>
+    <button class="sbtn-stat sbtn-sk" id="sbs-sk" onclick="setSelectedStatus('skip')" title="Hard">✗</button>
+    <button class="sbtn-stat sbtn-am" id="sbs-am" onclick="setSelectedStatus('maybe')" title="Almost">~</button>
+    <button class="sbtn-stat sbtn-kn" id="sbs-kn" onclick="setSelectedStatus('know')" title="Known">✓</button>
+    <div class="sel-divider"></div>
+    <button class="sbtn-mode" id="modeToggle" onclick="cycleDrillMode()">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      <span id="modeLabel">Quiz</span>
+    </button>
+    <button class="sbtn-clear" onclick="clearPicked()">Clear</button>
+    <button class="sbtn-drill" onclick="startDrill()">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Drill
+    </button>
   </div>
 </div>
 
@@ -877,6 +883,10 @@ input, textarea, select { font-family: 'Onest', sans-serif; color: inherit; }
       <button class="mbtn-drill" onclick="drillThisWord()">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         Drill this word
+      </button>
+      <button class="mbtn-delete" id="mbtnDelete" onclick="deleteWord()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+        Delete this word
       </button>
     </div>
   </div>
@@ -1083,10 +1093,13 @@ function selectAllFiltered() {
 
 function setSelectedStatus(sc) {
   if (!picked.size) return;
-  picked.forEach(word => { scores[word] = sc; });
-  saveScores();
-  updatePills();
-  renderVocab();
+  // Check if ALL selected words already have this status → toggle off
+  const allMatch = [...picked].every(w => scores[w] === sc);
+  picked.forEach(word => {
+    if (allMatch) delete scores[word];
+    else scores[word] = sc;
+  });
+  saveScores(); updatePills(); renderVocab();
 }
 
 function updateSelbar() {
@@ -1419,9 +1432,17 @@ function openModal(card) {
   mf.innerHTML = '';
   if (card.v2) mf.innerHTML = `<div class="mf"><span>V2</span>${esc(card.v2)}</div><div class="mf"><span>V3</span>${esc(card.v3 || '—')}</div>`;
   const mx = document.getElementById('mEx');
-  if (card.ex) { document.getElementById('mExEn').textContent = card.ex; document.getElementById('mExRu').textContent = card.exr || ''; mx.style.display = 'block'; }
+  if (card.ex) {
+    const exParts = card.ex.split(/\s*\/\s*/);
+    const exrParts = (card.exr || '').split(/\s*\/\s*/);
+    document.getElementById('mExEn').innerHTML = exParts.map(p => `<div style="margin-bottom:2px">${esc(p.trim())}</div>`).join('');
+    document.getElementById('mExRu').innerHTML = exrParts.filter(Boolean).map(p => `<div style="margin-bottom:2px">${esc(p.trim())}</div>`).join('');
+    mx.style.display = 'block';
+  }
   else mx.style.display = 'none';
   refreshModalStatus();
+  const dbtn = document.getElementById('mbtnDelete');
+  if (dbtn) dbtn.style.display = card._custom ? 'flex' : 'none';
   document.getElementById('wordModal').classList.add('on');
 }
 function refreshModalStatus() {
@@ -1430,11 +1451,28 @@ function refreshModalStatus() {
   if (s === 'skip') document.getElementById('msbSk').classList.add('active');
   if (s === 'maybe') document.getElementById('msbAm').classList.add('active');
   if (s === 'know') document.getElementById('msbKn').classList.add('active');
+  const cl = document.getElementById('msbCl');
+  if (cl) cl.style.opacity = s ? '1' : '0.4';
 }
 function setModalStatus(sc) {
+  if (scores[curWord] === sc) {
+    delete scores[curWord]; saveScores(); updatePills(); renderVocab(); refreshModalStatus(); return;
+  }
   setScore(curWord, sc);
   refreshModalStatus();
   renderVocab();
+}
+function deleteWord() {
+  if (!curWord) return;
+  const card = ALL.find(c => c.word === curWord);
+  if (!card || !card._custom) return;
+  if (!confirm('Delete "' + curWord + '"?')) return;
+  ALL = ALL.filter(c => c.word !== curWord);
+  picked.delete(curWord);
+  delete scores[curWord];
+  saveCustom(); saveScores();
+  closeModal();
+  buildVCats(); renderVocab(); updatePills();
 }
 function closeModal() { document.getElementById('wordModal').classList.remove('on'); }
 function closeModalIf(e) { if (e.target === document.getElementById('wordModal')) closeModal(); }
@@ -1593,6 +1631,7 @@ function addSingle() {
   if (!word || !tr) { sm.textContent = 'Fill word and translation'; sm.className = 'asm asm-err'; return; }
   if (wExists(word)) { sm.textContent = `"${word}" already in list!`; sm.className = 'asm asm-dup'; return; }
   ALL.push({ cat, word, tr, ph: gv('aPh'), v2: gv('aV2'), v3: gv('aV3'), ex: gv('aEx'), exr: '', _custom: true });
+  ALL.sort((a, b) => a.word.toLowerCase().localeCompare(b.word.toLowerCase()));
   saveCustom(); buildVCats(); renderVocab();
   sm.textContent = '✓ "' + word + '" added!'; sm.className = 'asm asm-ok';
   ['aWd', 'aTr', 'aPh', 'aV2', 'aV3', 'aEx'].forEach(id => document.getElementById(id).value = '');
@@ -1613,6 +1652,7 @@ function addBulk() {
     ALL.push({ cat, word, tr, ph: '', v2, v3, ex: '', exr: '', _custom: true });
     added++;
   });
+  ALL.sort((a, b) => a.word.toLowerCase().localeCompare(b.word.toLowerCase()));
   saveCustom(); buildVCats(); renderVocab();
   let msg = '';
   if (added) msg += '✓ Added: ' + added + '. ';
@@ -1626,6 +1666,7 @@ function saveScores() { try { localStorage.setItem('vd5_scores', JSON.stringify(
 function loadCustom() {
   try { const s = localStorage.getItem('vd5_words'); if (s) JSON.parse(s).forEach(c => { c._custom = true; if (!wExists(c.word)) ALL.push(c); }); } catch (e) { }
   try { const s = localStorage.getItem('vd5_scores'); if (s) { const saved = JSON.parse(s); Object.assign(scores, saved); } } catch (e) { }
+  ALL.sort((a, b) => a.word.toLowerCase().localeCompare(b.word.toLowerCase()));
 }
 
 // ══════════════════════════════════════════════
